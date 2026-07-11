@@ -1,0 +1,218 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --parchment: #FAF6EC;
+  --deep-forest: #1F353D;
+  --sage: #7E8875;
+  --sky-hover: #7FA7AF;
+  --crimson: #A8181D;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--parchment);
+  color: var(--deep-forest);
+  font-family: "Lora", serif;
+}
+
+a {
+  color: inherit;
+}
+
+.site-header {
+  border-bottom: 5px solid var(--sage);
+}
+
+.guild-navbar {
+  background: var(--deep-forest);
+  padding: 0;
+}
+
+.nav-shell {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 54px;
+  padding: 0.45rem 1.5rem;
+}
+
+.nav-link {
+  border-radius: 6px;
+  color: var(--parchment);
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.nav-link:hover,
+.nav-link:focus {
+  background: var(--sky-hover);
+  color: var(--deep-forest);
+}
+
+.nav-link.active {
+  background: var(--crimson);
+  color: var(--parchment);
+}
+
+.navbar-toggler {
+  border-color: var(--sage);
+  background: var(--parchment);
+}
+
+.navbar-nav {
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+
+.nav-link {
+  padding: 0.55rem 0.85rem;
+  color: var(--parchment);
+}
+
+.title-section {
+  position: relative;
+  min-height: 145px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 7rem;
+  background: var(--parchment);
+  color: var(--deep-forest);
+}
+
+.logo-link {
+  position: absolute;
+  left: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site-logo {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+}
+
+.site-title {
+  max-width: 780px;
+  margin: 0;
+  color: var(--deep-forest);
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.9rem, 4vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.site-main {
+  width: min(1100px, calc(100% - 2rem));
+  min-height: 55vh;
+  margin: 0 auto;
+  padding: 2.5rem 0;
+}
+
+.site-footer {
+  padding: 1.5rem;
+  background: var(--sky-hover);
+  color: var(--deep-forest);
+  text-align: center;
+}
+
+.footer-brand {
+  display: inline-block;
+  margin-bottom: 0.35rem;
+  color: var(--deep-forest);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.footer-brand:hover {
+  color: var(--crimson);
+}
+
+.site-footer p {
+  margin: 0.2rem 0;
+}
+
+.copyright {
+  font-size: 0.88rem;
+}
+
+.button {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.button-dark {
+  background: var(--deep-forest);
+  color: var(--parchment);
+}
+
+.button-dark:hover {
+  background: var(--sky-hover);
+  color: var(--deep-forest);
+}
+
+.login-page .site-main,
+.signin-page .site-main {
+  width: 100%;
+  min-height: 70vh;
+  margin: 0;
+  padding: 2.5rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-page .site-main {
+  background-image: url("images/login.png");
+}
+
+.signin-page .site-main {
+  background-image: url("images/signin.png");
+}
+
+@media (max-width: 991px) {
+  .navbar-nav {
+    align-items: stretch;
+    padding-top: 0.5rem;
+  }
+
+  .title-section {
+    min-height: 130px;
+    padding: 1.25rem 1rem 1.25rem 6rem;
+  }
+
+  .site-logo {
+    width: 72px;
+    height: 72px;
+  }
+}
+
+@media (max-width: 520px) {
+  .nav-shell {
+    padding-inline: 1rem;
+  }
+
+  .logo-link {
+    left: 1rem;
+  }
+
+  .site-title {
+    font-size: 1.25rem;
+  }
+
+  .site-logo {
+    width: 65px;
+    height: 65px;
+  }
+}

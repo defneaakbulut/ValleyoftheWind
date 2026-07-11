@@ -1,60 +1,82 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title> Valley of the Wind {% block title %}{% endblock %}</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Valley of the Wind {% block title %}{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    </head>
+  </head>
 
-    <body>
-        <header id = "myheader">
-            <nav class="navbar navbar-expand-lg mynavbar">
-                <div class="container-fluid">
-                    <h1 class="display-5">Explore Valley of the Wind</h1>
+  <body class="{% block body_class %}{% endblock %}">
+    <header class="site-header">
+      <nav class="navbar navbar-expand-lg guild-navbar">
+        <div class="container-fluid nav-shell">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+            aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span> 
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link {%block home_active%}{% endblock %}" aria-current="page" href="/">Quests</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link {%block about_active%}{% endblock %}" href="{{ url_for('about') }}">Chi siamo</a>
-            </li>
-            {% if current_user.is_authenticated %}
-            <li class="nav-item dropdown dropstart">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                @{{current_user.nickname}}
-              </a>
-              <ul class="dropdown-menu dropdown-menu-dark">
-                <li><a class="dropdown-item" href="{{ url_for('logout') }}">Esci</a></li>
-              </ul>
-            </li>
-            {% else %}
-            <li class="nav-item">
-              <a class="nav-link {%block signup_active%}{% endblock %}" aria-current="page"
-                href="{{ url_for('iscriviti') }}">Iscriviti</a>
-            </li>
-            {% endif %}
-          </ul>
+          <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav">
+              
+              <li class="nav-item">
+                <a class="nav-link {% block quest_active %}{% endblock %}" href="{{ url_for('quest_page') }}">Quests</a>
+              </li>
+
+              {% if session.get('role') == 'adventurer' %}
+                <li class="nav-item">
+                  <a class="nav-link {% block adventurer_active %}{% endblock %}" href="{{ url_for('adventurer_profile') }}">Adventurer Profile</a>
+                </li>
+              {% endif %}
+
+              {% if session.get('role') == 'guild_master' %}
+                <li class="nav-item">
+                  <a class="nav-link {% block guild_master_active %}{% endblock %}" href="{{ url_for('guild_master_profile') }}">Guild Master Profile</a>
+                </li>
+              {% endif %}
+
+              {% if session.get('role') == 'admin' %}
+                <li class="nav-item">
+                  <a class="nav-link {% block admin_active %}{% endblock %}" href="{{ url_for('admin') }}">Admin</a>
+                </li>
+              {% endif %}
+
+              <li class="nav-item">
+                <a class="nav-link {% block login_active %}{% endblock %}" href="{{ url_for('login') }}">Login</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% block register_active %}{% endblock %}" href="{{ url_for('register') }}">Register</a>
+              </li>
+              
+            </ul>
+          </div>
         </div>
-                </div>  
-            </nav>
-        </header>
+      </nav>
 
-        <footer class="site-footer">
-      <div>
-        <a class="footer-brand" href="{{ url_for('home') }}">Valley of the Wind Exploration Guild</a>
-        <p>Protect the valley. Explore the unknown.</p>
-      </div>
-      <p class="copyright">© 2026 Valley of the Wind. Inspired by Nausicaa of Valley of the Wind - Hayako Miyazaki</p>
+      <section class="title-section">
+        <a class="logo-link" href="{{ url_for('home') }}" aria-label="Valley of the Wind home">
+          <img class="site-logo" src="{{ url_for('static', filename='images/logo.png') }}" alt="Valley of the Wind logo">
+        </a>
+        <h1 class="site-title">Valley of the Wind Exploration Guild</h1>
+      </section>
+    </header>
+
+    <main id="main" class="site-main">
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+      <a class="footer-brand" href="{{ url_for('home') }}">Valley of the Wind Exploration Guild</a>
+      <p>Protect the valley. Explore the unknown.</p>
+      <p class="copyright">© 2026 Valley of the Wind. Inspired by Nausicaa of the Valley of the Wind - Hayao Miyazaki</p>
     </footer>
-    </body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+  </body>
 </html>
