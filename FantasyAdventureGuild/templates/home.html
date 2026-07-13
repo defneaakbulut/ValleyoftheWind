@@ -9,15 +9,17 @@
     <div class="quest-grid">
       {% for quest in quests %}
         <article class="quest-card">
-          <img src="{{ url_for('static', filename='images/' ~ quest['image_filename']) }}" alt="{{ quest['title'] }}">
+          <a class="quest-card-link" href="{{ url_for('quest_detail', quest_id=quest['id']) }}">
+            <img src="{{ url_for('static', filename='images/' ~ quest['image_filename']) }}" alt="{{ quest['title'] }}">
 
-          <div class="quest-card-content">
-            <h3>{{ quest['title'] }}</h3>
-            <p class="quest-meta">
-              {{ quest['duration_minutes'] }} min · {{ quest['quest_type']|title }} · {{ quest['difficulty']|title }}
-            </p>
-            <p>{{ quest['description'] }}</p>
-          </div>
+            <div class="quest-card-content">
+              <h3>{{ quest['title'] }}</h3>
+              <p class="quest-meta">
+                {{ quest['duration_minutes'] }} min · {{ quest['quest_type']|title }} · {{ quest['difficulty']|title }}
+              </p>
+              <p>{{ quest['description'] }}</p>
+            </div>
+          </a>
         </article>
       {% else %}
         <p class="empty-message">No quests are available yet.</p>

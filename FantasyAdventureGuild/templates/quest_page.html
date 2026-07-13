@@ -2,3 +2,77 @@
 
 {% block title %}Quest Board{% endblock %}
 {% block quest_active %}active{% endblock %}
+
+{% block content %}
+  {% if quest %}
+    <article class="quest-detail">
+      <div class="quest-detail-image">
+        <img src="{{ url_for('static', filename='images/' ~ quest['image_filename']) }}" alt="{{ quest['title'] }}">
+      </div>
+
+      <div class="quest-detail-content">
+        <p class="quest-kicker">{{ quest['quest_type']|title }} Quest</p>
+        <h2>{{ quest['title'] }}</h2>
+
+        <dl class="quest-facts">
+          <div>
+            <dt>Duration</dt>
+            <dd>{{ quest['duration_minutes'] }} minutes</dd>
+          </div>
+          <div>
+            <dt>Type</dt>
+            <dd>{{ quest['quest_type']|title }}</dd>
+          </div>
+          <div>
+            <dt>Difficulty</dt>
+            <dd>{{ quest['difficulty']|title }}</dd>
+          </div>
+        </dl>
+
+        <p class="quest-description">{{ quest['description'] }}</p>
+      </div>
+    </article>
+
+    <section class="quest-sessions">
+      <h3>Quest Sessions</h3>
+
+      {% if sessions %}
+        <div class="session-list">
+          {% for session in sessions %}
+            <article class="session-card">
+              <p class="session-day">{{ day_names[session['day_of_week']] }}</p>
+              <p><strong>Start:</strong> {{ session['start_time'] }}</p>
+              <p><strong>Location:</strong> {{ session['location'] }}</p>
+            </article>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="empty-message">No sessions are scheduled for this quest yet.</p>
+      {% endif %}
+    </section>
+  {% else %}
+    <section class="quest-board">
+      <h2>Available Quests</h2>
+
+      <div class="quest-grid">
+        {% for quest_item in quests %}
+          <article class="quest-card">
+            <a class="quest-card-link" href="{{ url_for('quest_detail', quest_id=quest_item['id']) }}">
+              <img src="{{ url_for('static', filename='images/' ~ quest_item['image_filename']) }}" alt="{{ quest_item['title'] }}">
+
+              <div class="quest-card-content">
+                <h3>{{ quest_item['title'] }}</h3>
+                <p class="quest-meta">
+                  {{ quest_item['duration_minutes'] }} min · {{ quest_item['quest_type']|title }} · {{ quest_item['difficulty']|title }}
+                </p>
+                <p>{{ quest_item['description'] }}</p>
+              </div>
+            </a>
+          </article>
+        {% else %}
+          <p class="empty-message">No quests are available yet.</p>
+        {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}

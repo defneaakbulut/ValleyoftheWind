@@ -35,6 +35,26 @@ def quest_page():
     db_quests = quests_dao.get_quests()
     return render_template('quest_page.html', quests=db_quests)
 
+@app.route('/quests/<int:quest_id>')
+def quest_detail(quest_id):
+    db_quest = quests_dao.get_quest_by_id(p_quest_id=quest_id)
+
+    if db_quest is None:
+        return redirect(url_for("error"))
+
+    db_sessions = quests_dao.get_sessions_by_quest_id(p_quest_id=quest_id)
+    day_names = {
+        1: "Monday",
+        2: "Tuesday",
+        3: "Wednesday",
+        4: "Thursday",
+        5: "Friday",
+        6: "Saturday",
+        7: "Sunday",
+    }
+
+    return render_template('quest_page.html', quest=db_quest, sessions=db_sessions, day_names=day_names)
+
 @app.route('/adventurer_profile')
 def adventurer_profile():
     return render_template('adventurer_profile.html')
@@ -82,8 +102,8 @@ def authenticate():
         # print("The user does not exist")
         flash("The user does not exist", "danger")
         return redirect(url_for("login"))
-
-    if not check_password_hash(db_user["password"], form_user["txt_password"]):
+    
+    if not check_password_hash(db_user[2], form_user["txt_password"]):
         # print("The password is wrong")
         flash("The password is wrong", "danger")
         return redirect(url_for("login"))
