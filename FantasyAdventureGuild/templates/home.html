@@ -3,4 +3,25 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+  <section id="quests" class="quest-board">
+    <h2>Available Quests</h2>
+
+    <div class="quest-grid">
+      {% for quest in quests %}
+        <article class="quest-card">
+          <img src="{{ url_for('static', filename='images/' ~ quest['image_filename']) }}" alt="{{ quest['title'] }}">
+
+          <div class="quest-card-content">
+            <h3>{{ quest['title'] }}</h3>
+            <p class="quest-meta">
+              {{ quest['duration_minutes'] }} min · {{ quest['quest_type']|title }} · {{ quest['difficulty']|title }}
+            </p>
+            <p>{{ quest['description'] }}</p>
+          </div>
+        </article>
+      {% else %}
+        <p class="empty-message">No quests are available yet.</p>
+      {% endfor %}
+    </div>
+  </section>
 {% endblock %}

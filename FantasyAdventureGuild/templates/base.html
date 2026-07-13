@@ -14,44 +14,45 @@
 
   <body class="{% block body_class %}{% endblock %}">
     <header class="site-header">
-      <nav class="navbar navbar-expand-lg guild-navbar">
+      <nav class="navbar guild-navbar">
         <div class="container-fluid nav-shell">
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
-            aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="mainNavbar">
+          <div class="navbar-links">
             <ul class="navbar-nav">
               
               <li class="nav-item">
-                <a class="nav-link {% block quest_active %}{% endblock %}" href="{{ url_for('quest_page') }}">Quests</a>
+                <a class="nav-link {% block quest_active %}{% endblock %}" href="{{ url_for('home') }}">Quests</a>
               </li>
 
-              {% if session.get('role') == 'adventurer' %}
+              {% if current_user.is_authenticated and current_user.role == 'adventurer' %}
                 <li class="nav-item">
                   <a class="nav-link {% block adventurer_active %}{% endblock %}" href="{{ url_for('adventurer_profile') }}">Adventurer Profile</a>
                 </li>
               {% endif %}
 
-              {% if session.get('role') == 'guild_master' %}
+              {% if current_user.is_authenticated and current_user.role == 'guild_master' %}
                 <li class="nav-item">
                   <a class="nav-link {% block guild_master_active %}{% endblock %}" href="{{ url_for('guild_master_profile') }}">Guild Master Profile</a>
                 </li>
               {% endif %}
 
-              {% if session.get('role') == 'admin' %}
+              {% if current_user.is_authenticated and current_user.role == 'admin' %}
                 <li class="nav-item">
                   <a class="nav-link {% block admin_active %}{% endblock %}" href="{{ url_for('admin') }}">Admin</a>
                 </li>
               {% endif %}
 
-              <li class="nav-item">
-                <a class="nav-link {% block login_active %}{% endblock %}" href="{{ url_for('login') }}">Login</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link {% block register_active %}{% endblock %}" href="{{ url_for('register') }}">Register</a>
-              </li>
+              {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link {% block login_active %}{% endblock %}" href="{{ url_for('login') }}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link {% block register_active %}{% endblock %}" href="{{ url_for('register') }}">Register</a>
+                </li>
+              {% endif %}
               
             </ul>
           </div>
@@ -67,6 +68,16 @@
     </header>
 
     <main id="main" class="site-main">
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <div class="flash-messages">
+            {% for message in messages %}
+              <p class="flash-message">{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
       {% block content %}{% endblock %}
     </main>
 

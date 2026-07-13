@@ -5,4 +5,26 @@
 {% block login_active %}active{% endblock %}
 
 {% block content %}
+  <section class="form-panel">
+    <h2>Login</h2>
+
+    <form class="auth-form" action="{{ url_for('authenticate') }}" method="post">
+      <div class="form-field">
+        <label for="txt_username">Username</label>
+        <input type="text" id="txt_username" name="txt_username" required>
+      </div>
+
+      <div class="form-field">
+        <label for="txt_password">Password</label>
+        <input type="password" id="txt_password" name="txt_password" required>
+      </div>
+
+      <button class="form-button" type="submit">Login</button>
+    </form>
+
+    <p class="form-link-text">
+      You are not a part of the Valley yet?
+      <a href="{{ url_for('register') }}">Register</a>
+    </p>
+  </section>
 {% endblock %}

@@ -5,4 +5,29 @@
 {% block register_active %}active{% endblock %}
 
 {% block content %}
+  <section class="form-panel">
+    <h2>Register</h2>
+
+    <form class="auth-form" action="{{ url_for('register') }}" method="post">
+      <div class="form-field">
+        <label for="txt_username">Username</label>
+        <input type="text" id="txt_username" name="txt_username" required>
+      </div>
+
+      <div class="form-field">
+        <label for="txt_password">Password</label>
+        <input type="password" id="txt_password" name="txt_password" required>
+      </div>
+
+      <div class="form-field">
+        <label for="txt_role">Role</label>
+        <select id="txt_role" name="txt_role" required>
+          <option value="adventurer">Adventurer</option>
+          <option value="guild_master">Guild Master</option>
+        </select>
+      </div>
+
+      <button class="form-button" type="submit">Register</button>
+    </form>
+  </section>
 {% endblock %}
