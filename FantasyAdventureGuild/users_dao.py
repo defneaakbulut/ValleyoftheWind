@@ -83,4 +83,31 @@ def username_exists(p_username):
     conn.close()
 
     return db_user is not None
+
+
+def get_adventurers_with_participation_counts():
+
+    query = """
+        SELECT
+            users.id,
+            users.username,
+            COUNT(participations.id) AS participation_count
+        FROM users
+        LEFT JOIN participations ON participations.user_id = users.id
+        WHERE users.role = 'adventurer'
+        GROUP BY users.id
+        ORDER BY users.username
+    """
+
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute(query)
+    db_adventurers = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return db_adventurers
     

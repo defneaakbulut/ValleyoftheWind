@@ -2,9 +2,97 @@
 
 {% block title %}Add Quest{% endblock %}
 {% block add_quest_active %}active{% endblock %}
-<h1 class="page-title">Add New Quest</h1>
-<form action="/register_tutor" method="post">
-    
-</form>
+{% block body_class %}add-quest-page{% endblock %}
+
 {% block content %}
+    <section class="add-quest-content">
+        <h2>Add Quest</h2>
+    
+        <form class="auth-form add-quest-form" action="{{ url_for('add_quest') }}" method="post" enctype="multipart/form-data">
+        <div class="form-field">
+            <label for="txt_title">Title</label>
+            <input type="text" id="txt_title" name="txt_title" required>
+        </div>
+    
+        <div class="form-field">
+            <label for="txt_description">Description</label>
+            <textarea id="txt_description" name="txt_description" required></textarea>
+        </div>
+    
+        <div class="form-field">
+            <label for="txt_duration">Duration (minutes)</label>
+            <input type="number" id="txt_duration" name="txt_duration" required>
+        </div>
+    
+        <div class="form-field">
+            <label for="txt_quest_type">Quest Type</label>
+            <select id="txt_quest_type" name="txt_quest_type" required>
+            <option value="">Select a quest type</option>
+            {% for quest_type in quest_types %}
+                <option value="{{ quest_type }}">{{ quest_type|title }}</option>
+            {% endfor %}
+            </select>
+        </div>
+    
+        <div class="form-field">
+            <label for="txt_difficulty">Difficulty</label>
+            <select id="txt_difficulty" name="txt_difficulty" required>
+            <option value="">Select a difficulty level</option>
+            {% for difficulty in difficulties %}
+                <option value="{{ difficulty }}">{{ difficulty|title }}</option>
+            {% endfor %}
+            </select>
+        </div>
+    
+        <div class="form-field">
+            <label for="file_image">Image</label>
+            <input type="file" id="file_image" name="file_image" accept=".jpg, .jpeg, .png, .gif">
+        </div>
+
+        <fieldset class="session-fields">
+            <legend>Quest Sessions</legend>
+
+            <div id="questSessionFields">
+                <div class="quest-session-row row g-3 align-items-end mb-3">
+                    <div class="col-md-4 form-field">
+                        <label for="txt_session_day_1">Day of the Week</label>
+                        <select id="txt_session_day_1" name="txt_session_day" required>
+                        <option value="">Select a day</option>
+                        {% for day_value, day_name in days %}
+                            <option value="{{ day_value }}">{{ day_name }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 form-field">
+                        <label for="txt_session_start_time_1">Start Time</label>
+                        <input type="time" id="txt_session_start_time_1" name="txt_session_start_time" required>
+                    </div>
+
+                    <div class="col-md-4 form-field">
+                        <label for="txt_session_location_1">Location</label>
+                        <select id="txt_session_location_1" name="txt_session_location" required>
+                        <option value="">Select a location</option>
+                        {% for location in locations %}
+                            <option value="{{ location }}">{{ location }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-md-1 d-flex">
+                        <button class="btn btn-outline-danger remove-session-button w-100" type="button" aria-label="Remove session" hidden>
+                            <i class="bi bi-dash-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary align-self-start" id="addSessionButton" type="button">
+                <i class="bi bi-plus-lg"></i>
+            </button>
+        </fieldset>
+    
+        <button class="form-button" type="submit">Add Quest</button>
+        </form>
+    </section>
 {% endblock %}

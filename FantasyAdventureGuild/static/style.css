@@ -237,7 +237,8 @@ a {
 }
 
 .form-field input,
-.form-field select {
+.form-field select,
+.form-field textarea {
   width: 100%;
   border: 2px solid var(--sage);
   border-radius: 6px;
@@ -247,10 +248,54 @@ a {
   font: inherit;
 }
 
+.form-field textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
 .form-field input:focus,
-.form-field select:focus {
+.form-field select:focus,
+.form-field textarea:focus {
   border-color: var(--sky-hover);
   outline: 3px solid rgba(127, 167, 175, 0.35);
+}
+
+.add-quest-content {
+  width: min(720px, 100%);
+  margin: 0 auto;
+  color: var(--parchment);
+}
+
+.add-quest-content h2 {
+  margin: 0 0 1.5rem;
+  font-family: Garamond, "EB Garamond", Georgia, serif;
+  font-size: 2.4rem;
+  text-align: center;
+}
+
+.add-quest-form {
+  color: var(--deep-forest);
+}
+
+.add-quest-form .form-button {
+  align-self: flex-start;
+}
+
+.session-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 0.5rem 0 0;
+  border: 0;
+  padding: 0;
+}
+
+.session-fields legend {
+  margin-bottom: 0.2rem;
+  color: var(--parchment);
+  font-family: Garamond, "EB Garamond", Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .form-button {
@@ -293,9 +338,56 @@ a {
   text-align: center;
 }
 
+.quest-filters {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(150px, 1fr)) auto;
+  gap: 0.75rem;
+  align-items: end;
+  margin-bottom: 1.5rem;
+  border: 2px solid var(--deep-forest);
+  border-radius: 8px;
+  padding: 1rem;
+  background: var(--parchment);
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.filter-field label {
+  font-weight: 700;
+}
+
+.filter-field select {
+  border: 2px solid var(--sage);
+  border-radius: 6px;
+  padding: 0.55rem 0.65rem;
+  background: #fff;
+  color: var(--deep-forest);
+  font: inherit;
+}
+
+.filter-button {
+  border: 0;
+  border-radius: 6px;
+  padding: 0.65rem 0.85rem;
+  background: var(--deep-forest);
+  color: var(--parchment);
+  font-weight: 700;
+}
+
+.filter-button:hover,
+.filter-button:focus {
+  background: var(--sky-hover);
+  color: var(--deep-forest);
+}
+
 .quest-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 320px));
+  justify-content: start;
   gap: 1.25rem;
 }
 
@@ -482,6 +574,10 @@ a {
   .quest-facts {
     grid-template-columns: 1fr;
   }
+
+  .quest-filters {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 520px) {
@@ -500,5 +596,9 @@ a {
   .site-logo {
     width: 65px;
     height: 65px;
+  }
+
+  .quest-filters {
+    grid-template-columns: 1fr;
   }
 }

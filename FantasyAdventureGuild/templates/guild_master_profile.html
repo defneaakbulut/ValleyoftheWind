@@ -4,4 +4,93 @@
 {% block guild_master_active %}active{% endblock %}
 
 {% block content %}
+  <section class="quest-board">
+    <h2>Guild Master's Profile</h2>
+
+    {% if quests %}
+      <div class="accordion" id="guildMasterQuests">
+        {% for quest in quests %}
+          <div class="accordion-item">
+            <h3 class="accordion-header" id="questHeading{{ quest['id'] }}">
+              <button class="accordion-button {% if not loop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#questSessions{{ quest['id'] }}" aria-expanded="{{ 'true' if loop.first else 'false' }}" aria-controls="questSessions{{ quest['id'] }}">
+                {{ quest['title'] }}
+              </button>
+            </h3>
+
+            <div id="questSessions{{ quest['id'] }}" class="accordion-collapse collapse {% if loop.first %}show{% endif %}" aria-labelledby="questHeading{{ quest['id'] }}" data-bs-parent="#guildMasterQuests">
+              <div class="accordion-body">
+                {% if quest['sessions'] %}
+                  <div class="row g-3">
+                    {% for session in quest['sessions'] %}
+                      <div class="col-lg-6">
+                        <article class="card h-100">
+                          <div class="card-body">
+                            <h4 class="card-title h5">{{ day_names[session['day_of_week']] }} at {{ session['start_time'] }}</h4>
+                            <p class="card-text mb-1"><strong>Location:</strong> {{ session['location'] }}</p>
+                            <p class="card-text mb-1"><strong>Reserved places:</strong> {{ session['total_reserved_places'] }}</p>
+                            <p class="card-text mb-1"><strong>Warrior:</strong> {{ session['warrior_taken'] }} reserved, {{ session['warrior_remaining'] }} remaining</p>
+                            <p class="card-text mb-1"><strong>Mage:</strong> {{ session['mage_taken'] }} reserved, {{ session['mage_remaining'] }} remaining</p>
+                            <p class="card-text mb-1"><strong>Healer:</strong> {{ session['healer_taken'] }} reserved, {{ session['healer_remaining'] }} remaining</p>
+                            <p class="card-text">
+                              <strong>Most requested:</strong>
+                              {% if session['most_requested_roles'] %}
+                                {{ session['most_requested_roles']|map('title')|join(', ') }}
+                              {% else %}
+                                None yet
+                              {% endif %}
+                            </p>
+
+                            {% if session['participation_count'] == 0 %}
+                              <form class="row g-2 align-items-end mt-3" action="{{ url_for('update_quest_session', session_id=session['id']) }}" method="post">
+                                <div class="col-md-4">
+                                  <label class="form-label" for="txt_session_day_{{ session['id'] }}">Day</label>
+                                  <select class="form-select" id="txt_session_day_{{ session['id'] }}" name="txt_session_day" required>
+                                    {% for day_value, day_name in days %}
+                                      <option value="{{ day_value }}" {% if session['day_of_week'] == day_value %}selected{% endif %}>{{ day_name }}</option>
+                                    {% endfor %}
+                                  </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                  <label class="form-label" for="txt_session_start_time_{{ session['id'] }}">Start</label>
+                                  <input class="form-control" type="time" id="txt_session_start_time_{{ session['id'] }}" name="txt_session_start_time" value="{{ session['start_time'] }}" required>
+                                </div>
+
+                                <div class="col-md-5">
+                                  <label class="form-label" for="txt_session_location_{{ session['id'] }}">Location</label>
+                                  <select class="form-select" id="txt_session_location_{{ session['id'] }}" name="txt_session_location" required>
+                                    {% for location in locations %}
+                                      <option value="{{ location }}" {% if session['location'] == location %}selected{% endif %}>{{ location }}</option>
+                                    {% endfor %}
+                                  </select>
+                                </div>
+
+                                <div class="col-12">
+                                  <button class="btn btn-primary btn-sm" type="submit">Modify Session</button>
+                                </div>
+                              </form>
+                            {% else %}
+                              <p class="alert alert-info mt-3 mb-0">This session cannot be modified because adventurers have joined.</p>
+                            {% endif %}
+
+                            <form class="mt-2" action="{{ url_for('cancel_quest_session', session_id=session['id']) }}" method="post">
+                              <button class="btn btn-outline-danger btn-sm" type="submit">Cancel Session</button>
+                            </form>
+                          </div>
+                        </article>
+                      </div>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <p class="empty-message">No sessions are scheduled for this quest yet.</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-message">You have not created any quests yet.</p>
+    {% endif %}
+  </section>
 {% endblock %}
