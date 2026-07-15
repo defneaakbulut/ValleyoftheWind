@@ -1,112 +1,74 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const sessionFields = document.querySelector("#questSessionFields");
-  const addSessionButton = document.querySelector("#addSessionButton");
+const addSessionButton = document.querySelector("#addSessionButton");
+const sessionFields = document.querySelector("#questSessionFields");
 
-  if (sessionFields && addSessionButton) {
-    function updateSessionControls() {
-      const rows = Array.from(sessionFields.querySelectorAll(".quest-session-row"));
+if (addSessionButton) {
+  addSessionButton.addEventListener("click", function () {
+    const firstSession = document.querySelector(".quest-session-row");
+    const newSession = firstSession.cloneNode(true);
+    const newRemoveButton = newSession.querySelector(".remove-session-button");
 
-      rows.forEach((row, index) => {
-        const removeButton = row.querySelector(".remove-session-button");
-        const dayField = row.querySelector("[name='txt_session_day']");
-        const timeField = row.querySelector("[name='txt_session_start_time']");
-        const locationField = row.querySelector("[name='txt_session_location']");
+    newSession.querySelector("[name='txt_session_day']").value = "";
+    newSession.querySelector("[name='txt_session_start_time']").value = "";
+    newSession.querySelector("[name='txt_session_location']").value = "";
+    newRemoveButton.hidden = false;
+    newRemoveButton.addEventListener("click", removeSession);
 
-        [
-          [dayField, "txt_session_day"],
-          [timeField, "txt_session_start_time"],
-          [locationField, "txt_session_location"],
-        ].forEach(([field, baseId]) => {
-          field.id = `${baseId}_${index + 1}`;
-          field.closest(".form-field").querySelector("label").setAttribute("for", field.id);
-        });
+    sessionFields.appendChild(newSession);
 
-        removeButton.hidden = rows.length === 1;
-      });
+    const removeButtons = document.querySelectorAll(".remove-session-button");
+    for (const button of removeButtons) {
+      button.hidden = false;
     }
-
-    addSessionButton.addEventListener("click", () => {
-      const firstRow = sessionFields.querySelector(".quest-session-row");
-      const newRow = firstRow.cloneNode(true);
-
-      newRow.querySelectorAll("select, input").forEach((field) => {
-        field.value = "";
-      });
-
-      sessionFields.appendChild(newRow);
-      updateSessionControls();
-    });
-
-    sessionFields.addEventListener("click", (event) => {
-      const removeButton = event.target.closest(".remove-session-button");
-
-      if (!removeButton) {
-        return;
-      }
-
-      removeButton.closest(".quest-session-row").remove();
-      updateSessionControls();
-    });
-
-    updateSessionControls();
-  }
-
-  const filters = document.querySelector("#questFilters");
-
-  if (!filters) {
-    return;
-  }
-
-  const dayFilter = document.querySelector("#filterDay");
-  const questTypeFilter = document.querySelector("#filterQuestType");
-  const difficultyFilter = document.querySelector("#filterDifficulty");
-  const roleFilter = document.querySelector("#filterRole");
-  const questCards = Array.from(document.querySelectorAll(".quest-session-card"));
-  const noMatchesMessage = document.querySelector("#noQuestMatches");
-
-  function roleIsAvailable(card, selectedRole) {
-    if (!selectedRole) {
-      return true;
-    }
-
-    const takenRoles = card.dataset.takenRoles
-      .split(",")
-      .map((role) => role.trim())
-      .filter(Boolean);
-
-    return !takenRoles.includes(selectedRole);
-  }
-
-  function applyQuestFilters() {
-    const selectedDay = dayFilter.value;
-    const selectedQuestType = questTypeFilter.value;
-    const selectedDifficulty = difficultyFilter.value;
-    const selectedRole = roleFilter.value;
-    let visibleCount = 0;
-
-    questCards.forEach((card) => {
-      const matchesDay = !selectedDay || card.dataset.day === selectedDay;
-      const matchesQuestType = !selectedQuestType || card.dataset.questType === selectedQuestType;
-      const matchesDifficulty = !selectedDifficulty || card.dataset.difficulty === selectedDifficulty;
-      const matchesRole = roleIsAvailable(card, selectedRole);
-      const shouldShow = matchesDay && matchesQuestType && matchesDifficulty && matchesRole;
-
-      card.hidden = !shouldShow;
-
-      if (shouldShow) {
-        visibleCount += 1;
-      }
-    });
-
-    if (noMatchesMessage) {
-      noMatchesMessage.hidden = visibleCount !== 0;
-    }
-  }
-
-  filters.addEventListener("change", applyQuestFilters);
-  filters.addEventListener("reset", () => {
-    setTimeout(applyQuestFilters, 0);
   });
+}
 
-  applyQuestFilters();
-});
+if (sessionFields) {
+  const removeButtons = document.querySelectorAll(".remove-session-button");
+
+  for (const button of removeButtons) {
+    button.addEventListener("click", removeSession);
+  }
+}
+
+function removeSession(event) {
+  const removeButton = event.currentTarget;
+  removeButton.parentElement.parentElement.remove();
+
+  const sessionRows = document.querySelectorAll(".quest-session-row");
+  const removeButtons = document.querySelectorAll(".remove-session-button");
+
+  if (sessionRows.length === 1) {
+    removeButtons[0].hidden = true;
+  }
+}
+
+const filters = document.querySelector("#questFilters");
+const cards = document.querySelectorAll(".quest-session-card");
+const noMatchesMessage = document.querySelector("#noQuestMatches");
+
+if (filters) {
+  filters.addEventListener("change", function () {
+    const selectedDay = document.querySelector("#filterDay").value;
+    const selectedQuestType = document.querySelector("#filterQuestType").value;
+    const selectedDifficulty = document.querySelector("#filterDifficulty").value;
+    const selectedRole = document.querySelector("#filterRole").value;
+    let visibleQuests = 0;
+
+    for (const card of cards) {
+      const matchesDay = selectedDay === "" || card.dataset.day === selectedDay;
+      const matchesQuestType = selectedQuestType === "" || card.dataset.questType === selectedQuestType;
+      const matchesDifficulty = selectedDifficulty === "" || card.dataset.difficulty === selectedDifficulty;
+      const matchesRole = selectedRole === "" || !card.dataset.takenRoles.includes(selectedRole);
+
+      if (matchesDay && matchesQuestType && matchesDifficulty && matchesRole) {
+        card.hidden = false;
+        visibleQuests += 1;
+      } else {
+        card.hidden = true;
+      }
+    }
+    if (noMatchesMessage) {
+      noMatchesMessage.hidden = visibleQuests > 0;
+    }
+  });
+}

@@ -2,7 +2,6 @@
 
 {% block title %}Add Quest{% endblock %}
 {% block add_quest_active %}active{% endblock %}
-{% block body_class %}add-quest-page{% endblock %}
 
 {% block content %}
     <section class="add-quest-content">
@@ -29,7 +28,7 @@
             <select id="txt_quest_type" name="txt_quest_type" required>
             <option value="">Select a quest type</option>
             {% for quest_type in quest_types %}
-                <option value="{{ quest_type }}">{{ quest_type|title }}</option>
+                <option value="{{ quest_type }}">{{ quest_type }}</option>
             {% endfor %}
             </select>
         </div>
@@ -39,7 +38,7 @@
             <select id="txt_difficulty" name="txt_difficulty" required>
             <option value="">Select a difficulty level</option>
             {% for difficulty in difficulties %}
-                <option value="{{ difficulty }}">{{ difficulty|title }}</option>
+                <option value="{{ difficulty }}">{{ difficulty }}</option>
             {% endfor %}
             </select>
         </div>
@@ -49,8 +48,8 @@
             <input type="file" id="file_image" name="file_image" accept=".jpg, .jpeg, .png, .gif">
         </div>
 
-        <fieldset class="session-fields">
-            <legend>Quest Sessions</legend>
+        <section class="session-fields">
+            <h3>Quest Sessions</h3>
 
             <div id="questSessionFields">
                 <div class="quest-session-row row g-3 align-items-end mb-3">
@@ -80,7 +79,7 @@
                     </div>
 
                     <div class="col-md-1 d-flex">
-                        <button class="btn btn-outline-danger remove-session-button w-100" type="button" aria-label="Remove session" hidden>
+                        <button class="btn btn-outline-danger remove-session-button w-100" type="button">
                             <i class="bi bi-dash-lg"></i>
                         </button>
                     </div>
@@ -90,7 +89,7 @@
             <button class="btn btn-primary align-self-start" id="addSessionButton" type="button">
                 <i class="bi bi-plus-lg"></i>
             </button>
-        </fieldset>
+        </section>
     
         <button class="form-button" type="submit">Add Quest</button>
         </form>

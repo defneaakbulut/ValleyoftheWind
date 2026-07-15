@@ -12,7 +12,7 @@
         <div class="card h-100">
           <div class="card-body">
             <h3 class="h6 card-title">Adventurers</h3>
-            <p class="display-6 mb-0">{{ stats['total_adventurers'] }}</p>
+            <p class="display-6 mb-0">{{ stats.total_adventurers }}</p>
           </div>
         </div>
       </div>
@@ -21,7 +21,7 @@
         <div class="card h-100">
           <div class="card-body">
             <h3 class="h6 card-title">Quests</h3>
-            <p class="display-6 mb-0">{{ stats['total_quests'] }}</p>
+            <p class="display-6 mb-0">{{ stats.total_quests }}</p>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@
         <div class="card h-100">
           <div class="card-body">
             <h3 class="h6 card-title">Sessions</h3>
-            <p class="display-6 mb-0">{{ stats['total_sessions'] }}</p>
+            <p class="display-6 mb-0">{{ stats.total_sessions }}</p>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@
         <div class="card h-100">
           <div class="card-body">
             <h3 class="h6 card-title">Participations</h3>
-            <p class="display-6 mb-0">{{ stats['total_participations'] }}</p>
+            <p class="display-6 mb-0">{{ stats.total_participations }}</p>
           </div>
         </div>
       </div>
@@ -50,9 +50,9 @@
         <div class="card h-100">
           <div class="card-body">
             <h3 class="h5 card-title">Reserved Places by Role</h3>
-            <p class="mb-1"><strong>Warrior:</strong> {{ stats['reserved_places']['warrior'] }}</p>
-            <p class="mb-1"><strong>Mage:</strong> {{ stats['reserved_places']['mage'] }}</p>
-            <p class="mb-0"><strong>Healer:</strong> {{ stats['reserved_places']['healer'] }}</p>
+            <p class="mb-1">Warrior: {{ stats.reserved_places.warrior }}</p>
+            <p class="mb-1">Mage: {{ stats.reserved_places.mage }}</p>
+            <p class="mb-0">Healer: {{ stats.reserved_places.healer }}</p>
           </div>
         </div>
       </div>
@@ -61,8 +61,8 @@
         <div class="card h-100">
           <div class="card-body">
             <h3 class="h5 card-title">Most Popular Quest Type</h3>
-            {% if stats['most_popular_quest_type'] %}
-              <p class="mb-0">{{ stats['most_popular_quest_type']['quest_type']|title }} ({{ stats['most_popular_quest_type']['quest_count'] }} quests)</p>
+            {% if stats.most_popular_quest_type %}
+              <p class="mb-0">{{ stats.most_popular_quest_type.quest_type }} ({{ stats.most_popular_quest_type.quest_count }} quests)</p>
             {% else %}
               <p class="mb-0">No quests yet.</p>
             {% endif %}
@@ -74,12 +74,12 @@
         <div class="card h-100">
           <div class="card-body">
             <h3 class="h5 card-title">Busiest Session</h3>
-            {% if stats['busiest_session'] %}
-              <p class="mb-1">{{ stats['busiest_session']['title'] }}</p>
+            {% if stats.busiest_session %}
+              <p class="mb-1">{{ stats.busiest_session.title }}</p>
               <p class="mb-0">
-                {{ day_names[stats['busiest_session']['day_of_week']] }} at {{ stats['busiest_session']['start_time'] }},
-                {{ stats['busiest_session']['location'] }}
-                ({{ stats['busiest_session']['reserved_places'] }} places)
+                {{ day_names[stats.busiest_session.day_of_week] }} at {{ stats.busiest_session.start_time }},
+                {{ stats.busiest_session.location }}
+                ({{ stats.busiest_session.reserved_places }} places)
               </p>
             {% else %}
               <p class="mb-0">No sessions yet.</p>
@@ -96,24 +96,15 @@
             <h3 class="h4 card-title">Registered Adventurers</h3>
 
             {% if adventurers %}
-              <div class="table-responsive">
-                <table class="table table-striped align-middle">
-                  <thead>
-                    <tr>
-                      <th scope="col">Username</th>
-                      <th scope="col">Quest Participations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for adventurer in adventurers %}
-                      <tr>
-                        <td>{{ adventurer['username'] }}</td>
-                        <td>{{ adventurer['participation_count'] }}</td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
+              <ul class="list-group">
+                {% for adventurer in adventurers %}
+                  <li class="list-group-item">
+                    <strong>{{ adventurer.username }}</strong>
+                    <br>
+                    Quest participations: {{ adventurer.participation_count }}
+                  </li>
+                {% endfor %}
+              </ul>
             {% else %}
               <p class="mb-0">No adventurers registered yet.</p>
             {% endif %}
@@ -127,28 +118,19 @@
             <h3 class="h4 card-title">All Quests</h3>
 
             {% if quests %}
-              <div class="table-responsive">
-                <table class="table table-striped align-middle">
-                  <thead>
-                    <tr>
-                      <th scope="col">Title</th>
-                      <th scope="col">Type</th>
-                      <th scope="col">Difficulty</th>
-                      <th scope="col">Duration</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for quest in quests %}
-                      <tr>
-                        <td>{{ quest['title'] }}</td>
-                        <td>{{ quest['quest_type']|title }}</td>
-                        <td>{{ quest['difficulty']|title }}</td>
-                        <td>{{ quest['duration_minutes'] }} min</td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
+              <ul class="list-group">
+                {% for quest in quests %}
+                  <li class="list-group-item">
+                    <strong>{{ quest.title }}</strong>
+                    <br>
+                    Type: {{ quest.quest_type }}
+                    <br>
+                    Difficulty: {{ quest.difficulty }}
+                    <br>
+                    Duration: {{ quest.duration_minutes }} min
+                  </li>
+                {% endfor %}
+              </ul>
             {% else %}
               <p class="mb-0">No quests scheduled yet.</p>
             {% endif %}
@@ -162,43 +144,30 @@
         <h3 class="h4 card-title">Quest Sessions This Week</h3>
 
         {% if sessions %}
-          <div class="table-responsive">
-            <table class="table table-striped align-middle">
-              <thead>
-                <tr>
-                  <th scope="col">Quest</th>
-                  <th scope="col">Day</th>
-                  <th scope="col">Start</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Difficulty</th>
-                  <th scope="col">Available Roles</th>
-                  <th scope="col">Participations</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for session in sessions %}
-                  <tr>
-                    <td>{{ session['title'] }}</td>
-                    <td>{{ day_names[session['day_of_week']] }}</td>
-                    <td>{{ session['start_time'] }}</td>
-                    <td>{{ session['location'] }}</td>
-                    <td>{{ session['quest_type']|title }}</td>
-                    <td>{{ session['difficulty']|title }}</td>
-                    <td>
-                      Warrior {{ roles['warrior'] - session['warrior_taken'] }},
-                      Mage {{ roles['mage'] - session['mage_taken'] }},
-                      Healer {{ roles['healer'] - session['healer_taken'] }}
-                    </td>
-                    <td>
-                      {{ session['participation_count'] }} participations,
-                      {{ session['total_reserved_places'] }} reserved places
-                    </td>
-                  </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
+          <ul class="list-group">
+            {% for session in sessions %}
+              <li class="list-group-item">
+                <strong>{{ session.title }}</strong>
+                <br>
+                {{ day_names[session.day_of_week] }} at {{ session.start_time }}
+                <br>
+                Location: {{ session.location }}
+                <br>
+                Type: {{ session.quest_type }}
+                <br>
+                Difficulty: {{ session.difficulty }}
+                <br>
+                Available roles:
+                Warrior {{ roles.warrior - session.warrior_taken }},
+                Mage {{ roles.mage - session.mage_taken }},
+                Healer {{ roles.healer - session.healer_taken }}
+                <br>
+                Participations: {{ session.participation_count }}
+                <br>
+                Reserved places: {{ session.total_reserved_places }}
+              </li>
+            {% endfor %}
+          </ul>
         {% else %}
           <p class="mb-0">No quest sessions scheduled yet.</p>
         {% endif %}

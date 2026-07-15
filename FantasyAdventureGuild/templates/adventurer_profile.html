@@ -8,36 +8,25 @@
     <h2>Adventurer Profile</h2>
 
     {% if participations %}
-      <div class="table-responsive">
-        <table class="table table-striped table-bordered align-middle bg-light">
-          <thead>
-            <tr>
-              <th scope="col">Quest</th>
-              <th scope="col">Day</th>
-              <th scope="col">Start</th>
-              <th scope="col">Location</th>
-              <th scope="col">Role</th>
-              <th scope="col">Reserved Places</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for participation in participations %}
-              <tr>
-                <td>
-                  <a href="{{ url_for('quest_detail', quest_id=participation['quest_id']) }}">
-                    {{ participation['title'] }}
-                  </a>
-                </td>
-                <td>{{ day_names[participation['day_of_week']] }}</td>
-                <td>{{ participation['start_time'] }}</td>
-                <td>{{ participation['location'] }}</td>
-                <td>{{ participation['selected_role']|title }}</td>
-                <td>{{ participation['reserved_places'] }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
+      <ul class="list-group">
+        {% for participation in participations %}
+          <li class="list-group-item">
+            <a href="{{ url_for('quest_detail', quest_id=participation.quest_id) }}">
+              <strong>{{ participation.title }}</strong>
+            </a>
+            <br>
+            Day: {{ day_names[participation.day_of_week] }}
+            <br>
+            Start: {{ participation.start_time }}
+            <br>
+            Location: {{ participation.location }}
+            <br>
+            Role: {{ participation.selected_role }}
+            <br>
+            Reserved places: {{ participation.reserved_places }}
+          </li>
+        {% endfor %}
+      </ul>
     {% else %}
       <p class="empty-message">You have not joined any quest sessions yet.</p>
     {% endif %}

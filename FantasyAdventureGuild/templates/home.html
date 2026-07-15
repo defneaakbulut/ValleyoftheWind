@@ -3,7 +3,7 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <section id="quests" class="quest-board">
+  <section class="quest-board">
     <h2>Available Quest Sessions</h2>
 
     <form class="quest-filters" id="questFilters">
@@ -22,7 +22,7 @@
         <select id="filterQuestType">
           <option value="">All types</option>
           {% for quest_type in quest_types %}
-            <option value="{{ quest_type }}">{{ quest_type|title }}</option>
+            <option value="{{ quest_type }}">{{ quest_type }}</option>
           {% endfor %}
         </select>
       </div>
@@ -32,7 +32,7 @@
         <select id="filterDifficulty">
           <option value="">All levels</option>
           {% for difficulty in difficulties %}
-            <option value="{{ difficulty }}">{{ difficulty|title }}</option>
+            <option value="{{ difficulty }}">{{ difficulty }}</option>
           {% endfor %}
         </select>
       </div>
@@ -42,7 +42,7 @@
         <select id="filterRole">
           <option value="">Any role</option>
           {% for role in roles %}
-            <option value="{{ role }}">{{ role|title }}</option>
+            <option value="{{ role }}">{{ role }}</option>
           {% endfor %}
         </select>
       </div>
@@ -54,23 +54,23 @@
       {% for session in sessions %}
         <article
           class="quest-card quest-session-card"
-          data-day="{{ session['day_of_week'] }}"
-          data-quest-type="{{ session['quest_type'] }}"
-          data-difficulty="{{ session['difficulty'] }}"
-          data-taken-roles="{{ session['taken_roles'] }}"
+          data-day="{{ session.day_of_week }}"
+          data-quest-type="{{ session.quest_type }}"
+          data-difficulty="{{ session.difficulty }}"
+          data-taken-roles="{{ session.taken_roles }}"
         >
-          <a class="quest-card-link" href="{{ url_for('quest_detail', quest_id=session['quest_id']) }}">
-            <img src="{{ url_for('static', filename='images/' ~ session['image_filename']) }}" alt="{{ session['title'] }}">
+          <a class="quest-card-link" href="{{ url_for('quest_detail', quest_id=session.quest_id) }}">
+            <img src="{{ url_for('static', filename='images/' ~ session.image_filename) }}" alt="{{ session.title }}">
 
             <div class="quest-card-content">
-              <h3>{{ session['title'] }}</h3>
+              <h3>{{ session.title }}</h3>
               <p class="quest-meta">
-                {{ day_names[session['day_of_week']] }} · {{ session['start_time'] }} · {{ session['location'] }}
+                {{ day_names[session.day_of_week] }} · {{ session.start_time }} · {{ session.location }}
               </p>
               <p class="quest-meta">
-                {{ session['duration_minutes'] }} min · {{ session['quest_type']|title }} · {{ session['difficulty']|title }}
+                {{ session.duration_minutes }} min · {{ session.quest_type }} · {{ session.difficulty }}
               </p>
-              <p>{{ session['description'] }}</p>
+              <p>{{ session.description }}</p>
             </div>
           </a>
         </article>

@@ -3,18 +3,18 @@
 }
 
 :root {
-  --parchment: #FAF6EC;
-  --deep-forest: #1F353D;
-  --sage: #7E8875;
-  --sky-hover: #7FA7AF;
-  --crimson: #A8181D;
+  --parchment: #faf6ec;
+  --forest: #1f353d;
+  --sage: #7e8875;
+  --sky: #7fa7af;
+  --red: #a8181d;
 }
 
 body {
   min-height: 100vh;
   margin: 0;
   background: var(--sage);
-  color: var(--deep-forest);
+  color: var(--forest);
   font-family: "Lora", serif;
 }
 
@@ -27,74 +27,50 @@ a {
 }
 
 .guild-navbar {
-  background: var(--deep-forest);
-  padding: 0;
+  background: var(--forest);
 }
 
-.nav-shell {
-  display: flex;
-  justify-content: flex-end;
-  min-height: 54px;
-  padding: 0.45rem 1.5rem;
-}
-
-.navbar-links {
+.navbar-links,
+.navbar-nav {
   display: flex;
   justify-content: flex-end;
   width: 100%;
 }
 
+.navbar-nav {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
 .nav-link {
   border-radius: 6px;
+  padding: 0.55rem 0.85rem;
   color: var(--parchment);
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 700;
   text-decoration: none;
-  transition: background-color 160ms ease, color 160ms ease;
 }
 
 .nav-link:hover,
-.nav-link:focus {
-  background: var(--sky-hover);
-  color: var(--deep-forest);
-}
-
 .nav-link.active {
-  background: var(--sky-hover);
-  color: var(--parchment);
-}
-
-.navbar-nav {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  justify-content: flex-end;
-  gap: 0.45rem;
-}
-
-.nav-link {
-  padding: 0.55rem 0.85rem;
-  color: var(--parchment);
+  background: var(--sky);
+  color: var(--forest);
 }
 
 .title-section {
   position: relative;
-  min-height: 145px;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-height: 145px;
   padding: 1.5rem 7rem;
   background: var(--parchment);
-  color: var(--deep-forest);
 }
 
 .logo-link {
   position: absolute;
   left: 1.5rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .site-logo {
@@ -104,13 +80,9 @@ a {
 }
 
 .site-title {
-  max-width: 780px;
   margin: 0;
-  color: var(--deep-forest);
-  font-family: 'Cinzel', serif;
+  font-family: "Cinzel", serif;
   font-size: clamp(1.9rem, 4vw, 3.4rem);
-  font-weight: 700;
-  line-height: 1.05;
   text-align: center;
 }
 
@@ -121,76 +93,68 @@ a {
   padding: 2.5rem 0;
 }
 
-.flash-messages {
-  width: min(620px, calc(100% - 2rem));
-  margin: 0 auto 1rem;
-}
-
-.flash-message {
-  margin: 0;
-  border: 2px solid var(--crimson);
-  border-radius: 6px;
-  padding: 0.75rem 1rem;
-  background: var(--parchment);
-  color: var(--crimson);
-  font-weight: 700;
-  text-align: center;
-}
-
 .site-footer {
   padding: 1.5rem;
-  background: var(--sky-hover);
-  color: var(--deep-forest);
+  background: var(--sky);
   text-align: center;
 }
 
-.footer-brand {
-  display: inline-block;
-  margin-bottom: 0.35rem;
-  color: var(--deep-forest);
+.footer-brand,
+.form-link-text a {
   font-weight: 700;
   text-decoration: none;
-}
-
-.footer-brand:hover {
-  color: var(--crimson);
-}
-
-.site-footer p {
-  margin: 0.2rem 0;
 }
 
 .copyright {
   font-size: 0.88rem;
 }
 
-.button {
-  display: inline-block;
+.flash-messages {
+  max-width: 620px;
+  margin: 0 auto 1rem;
+}
+
+.flash-message,
+.empty-message {
+  margin: 0;
+  padding: 1rem;
   border-radius: 6px;
-  padding: 0.7rem 1rem;
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--parchment);
+  text-align: center;
+}
+
+.flash-message {
+  border: 2px solid var(--red);
+  color: var(--red);
+  font-weight: 700;
+}
+
+.button,
+.form-button,
+.filter-button {
+  border: 0;
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  background: var(--forest);
+  color: var(--parchment);
   font-weight: 700;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.button-dark {
-  background: var(--deep-forest);
-  color: var(--parchment);
-}
-
-.button-dark:hover {
-  background: var(--sky-hover);
-  color: var(--deep-forest);
+.button:hover,
+.form-button:hover,
+.filter-button:hover {
+  background: var(--sky);
+  color: var(--forest);
 }
 
 .login-page .site-main,
 .signin-page .site-main {
   width: 100%;
   min-height: 70vh;
-  margin: 0;
   padding: 2.5rem;
   background-position: center;
-  background-repeat: no-repeat;
   background-size: cover;
 }
 
@@ -203,313 +167,181 @@ a {
 }
 
 .form-panel {
-  width: min(430px, calc(100% - 2rem));
+  width: min(430px, 100%);
   margin: 2rem auto;
+  padding: 2rem;
   border: 2px solid var(--sage);
   border-radius: 8px;
-  padding: 2rem;
   background: var(--parchment);
-  color: var(--deep-forest);
 }
 
-.form-panel h2 {
+.form-panel h2,
+.add-quest-content h2,
+.quest-board h2,
+.quest-sessions h3 {
   margin: 0 0 1.5rem;
-  color: var(--deep-forest);
   font-family: Garamond, "EB Garamond", Georgia, serif;
-  font-size: 2rem;
   text-align: center;
 }
 
-.auth-form {
+.auth-form,
+.form-field,
+.filter-field,
+.session-fields {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.75rem;
 }
 
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.form-field label {
+.form-field label,
+.filter-field label {
   font-weight: 700;
 }
 
 .form-field input,
 .form-field select,
-.form-field textarea {
+.form-field textarea,
+.filter-field select {
   width: 100%;
   border: 2px solid var(--sage);
   border-radius: 6px;
-  padding: 0.7rem 0.85rem;
-  background: #fff;
-  color: var(--deep-forest);
+  padding: 0.7rem;
+  background: white;
+  color: var(--forest);
   font: inherit;
 }
 
 .form-field textarea {
   min-height: 130px;
-  resize: vertical;
 }
 
-.form-field input:focus,
-.form-field select:focus,
-.form-field textarea:focus {
-  border-color: var(--sky-hover);
-  outline: 3px solid rgba(127, 167, 175, 0.35);
+.form-link-text {
+  margin-top: 1.2rem;
+  text-align: center;
 }
 
 .add-quest-content {
-  width: min(720px, 100%);
+  max-width: 720px;
   margin: 0 auto;
   color: var(--parchment);
 }
 
-.add-quest-content h2 {
-  margin: 0 0 1.5rem;
-  font-family: Garamond, "EB Garamond", Georgia, serif;
-  font-size: 2.4rem;
-  text-align: center;
-}
-
 .add-quest-form {
-  color: var(--deep-forest);
-}
-
-.add-quest-form .form-button {
-  align-self: flex-start;
+  color: var(--forest);
 }
 
 .session-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin: 0.5rem 0 0;
   border: 0;
   padding: 0;
 }
 
-.session-fields legend {
-  margin-bottom: 0.2rem;
+.session-fields h3,
+.quest-board h2,
+.quest-sessions h3 {
   color: var(--parchment);
-  font-family: Garamond, "EB Garamond", Georgia, serif;
-  font-size: 1.5rem;
-  font-weight: 700;
 }
 
-.form-button {
-  border-radius: 6px;
-  padding: 0.8rem 1rem;
-  background: var(--deep-forest);
-  color: var(--parchment);
-  font-weight: 700;
-  cursor: pointer;
-}
-
-.form-button:hover,
-.form-button:focus {
-  background: var(--sky-hover);
-  color: var(--deep-forest);
-}
-
-.form-link-text {
-  margin: 1.2rem 0 0;
-  text-align: center;
-}
-
-.form-link-text a {
-  color: var(--sky-hover);
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.form-link-text a:hover,
-.form-link-text a:focus {
-  color: var(--deep-forest);
-  text-decoration: underline;
-}
-
-.quest-board h2 {
-  margin: 0 0 1.5rem;
-  color: var(--parchment);
-  font-family: Garamond, "EB Garamond", Georgia, serif;
-  font-size: 2.4rem;
-  text-align: center;
+.quest-filters,
+.quest-grid,
+.session-list,
+.quest-detail,
+.quest-facts {
+  display: grid;
+  gap: 1rem;
 }
 
 .quest-filters {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(150px, 1fr)) auto;
-  gap: 0.75rem;
+  grid-template-columns: repeat(4, minmax(140px, 1fr)) auto;
   align-items: end;
   margin-bottom: 1.5rem;
-  border: 2px solid var(--deep-forest);
-  border-radius: 8px;
   padding: 1rem;
+  border: 2px solid var(--forest);
+  border-radius: 8px;
   background: var(--parchment);
-}
-
-.filter-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.filter-field label {
-  font-weight: 700;
-}
-
-.filter-field select {
-  border: 2px solid var(--sage);
-  border-radius: 6px;
-  padding: 0.55rem 0.65rem;
-  background: #fff;
-  color: var(--deep-forest);
-  font: inherit;
-}
-
-.filter-button {
-  border: 0;
-  border-radius: 6px;
-  padding: 0.65rem 0.85rem;
-  background: var(--deep-forest);
-  color: var(--parchment);
-  font-weight: 700;
-}
-
-.filter-button:hover,
-.filter-button:focus {
-  background: var(--sky-hover);
-  color: var(--deep-forest);
 }
 
 .quest-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 320px));
-  justify-content: start;
-  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
 
-.quest-card {
-  overflow: hidden;
-  border: 2px solid var(--deep-forest);
+.session-list {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.quest-card,
+.quest-detail,
+.session-card {
+  border: 2px solid var(--forest);
   border-radius: 8px;
   background: var(--parchment);
-  color: var(--deep-forest);
+}
+
+.quest-card,
+.quest-detail {
+  overflow: hidden;
 }
 
 .quest-card-link {
   display: block;
   height: 100%;
-  color: inherit;
   text-decoration: none;
 }
 
-.quest-card-link:hover h3,
-.quest-card-link:focus h3 {
-  color: var(--crimson);
+.quest-card img,
+.quest-detail-image img {
+  width: 100%;
+  object-fit: cover;
 }
 
 .quest-card img {
-  display: block;
-  width: 100%;
   height: 190px;
-  object-fit: cover;
-}
-
-.quest-card-content {
-  padding: 1rem;
-}
-
-.quest-card h3 {
-  margin: 0 0 0.5rem;
-  color: var(--deep-forest);
-  font-family: Garamond, "EB Garamond", Georgia, serif;
-  font-size: 1.45rem;
-}
-
-.quest-card p {
-  margin: 0;
-}
-
-.quest-meta {
-  margin-bottom: 0.7rem;
-  color: var(--crimson);
-  font-weight: 700;
-}
-
-.empty-message {
-  grid-column: 1 / -1;
-  margin: 0;
-  padding: 1rem;
-  background: var(--parchment);
-  color: var(--deep-forest);
-  text-align: center;
-}
-
-.quest-detail {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.9fr) minmax(300px, 1.1fr);
-  gap: 1.5rem;
-  overflow: hidden;
-  border: 2px solid var(--deep-forest);
-  border-radius: 8px;
-  background: var(--parchment);
-  color: var(--deep-forest);
 }
 
 .quest-detail-image img {
-  display: block;
-  width: 100%;
   height: 100%;
   min-height: 360px;
-  object-fit: cover;
 }
 
+.quest-card-content,
+.session-card,
 .quest-detail-content {
-  padding: 2rem;
+  padding: 1rem;
 }
 
-.quest-kicker {
-  margin: 0 0 0.45rem;
-  color: var(--crimson);
+.quest-card h3,
+.quest-detail h2 {
+  margin-top: 0;
+  font-family: Garamond, "EB Garamond", Georgia, serif;
+}
+
+.quest-meta,
+.quest-kicker,
+.session-day {
+  color: var(--red);
   font-weight: 700;
 }
 
-.quest-detail h2 {
-  margin: 0 0 1rem;
-  font-family: Garamond, "EB Garamond", Georgia, serif;
-  font-size: 2.5rem;
+.quest-detail {
+  grid-template-columns: 1fr 1fr;
 }
 
 .quest-facts {
-  display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  margin: 0 0 1.2rem;
 }
 
 .quest-facts div {
+  padding: 0.75rem;
   border: 1px solid var(--sage);
   border-radius: 6px;
-  padding: 0.75rem;
-  background: #fff;
-}
-
-.quest-facts dt {
-  color: var(--sage);
-  font-weight: 700;
+  background: white;
 }
 
 .quest-facts dd {
-  margin: 0.2rem 0 0;
+  margin-left: 0;
   font-weight: 700;
 }
 
 .quest-description {
-  margin: 0;
-  font-size: 1.05rem;
   line-height: 1.6;
 }
 
@@ -517,87 +349,27 @@ a {
   margin-top: 1.5rem;
 }
 
-.quest-sessions h3 {
-  margin: 0 0 1rem;
-  color: var(--parchment);
-  font-family: Garamond, "EB Garamond", Georgia, serif;
-  font-size: 2rem;
-  text-align: center;
-}
-
-.session-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
-}
-
-.session-card {
-  border: 2px solid var(--deep-forest);
-  border-radius: 8px;
-  padding: 1rem;
-  background: var(--parchment);
-}
-
 .session-card p {
   margin: 0.35rem 0;
 }
 
 .session-day {
-  color: var(--crimson);
   font-size: 1.2rem;
-  font-weight: 700;
 }
 
-@media (max-width: 991px) {
-  .navbar-nav {
-    align-items: flex-start;
-  }
-
+@media (max-width: 800px) {
   .title-section {
-    min-height: 130px;
-    padding: 1.25rem 1rem 1.25rem 6rem;
+    min-height: 120px;
+    padding: 1rem 1rem 1rem 6rem;
   }
 
   .site-logo {
-    width: 72px;
-    height: 72px;
+    width: 70px;
+    height: 70px;
   }
 
-  .quest-detail {
-    grid-template-columns: 1fr;
-  }
-
-  .quest-detail-image img {
-    min-height: 260px;
-  }
-
-  .quest-facts {
-    grid-template-columns: 1fr;
-  }
-
-  .quest-filters {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 520px) {
-  .nav-shell {
-    padding-inline: 1rem;
-  }
-
-  .logo-link {
-    left: 1rem;
-  }
-
-  .site-title {
-    font-size: 1.25rem;
-  }
-
-  .site-logo {
-    width: 65px;
-    height: 65px;
-  }
-
+  .quest-detail,
+  .quest-facts,
   .quest-filters {
     grid-template-columns: 1fr;
   }
