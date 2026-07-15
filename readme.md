@@ -18,7 +18,7 @@ http://127.0.0.1:5000
 ## Python Anywhere
 
 ```text
-Not deployed yet. Add the deployed application URL here before submission.
+https://defneakbulut.pythonanywhere.com/
 ```
 
 ## Simulated Current Day and Time
